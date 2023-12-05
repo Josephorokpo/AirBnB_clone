@@ -53,5 +53,5 @@ The command interpreter provides a set of commands to interact with the AirBnB o
 
 #Contributors:
 
-Joseph Orokpo
-Salah Eddine Ait Si Ahmad
+>Joseph Orokpo
+>Salah Eddine Ait Si Ahmad
