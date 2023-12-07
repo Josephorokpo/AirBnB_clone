@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-Module containing the BaseModel class.
+Module for the class BaseModel
 """
-
 
 import uuid
 from datetime import datetime
@@ -10,69 +9,66 @@ from datetime import datetime
 
 class BaseModel:
     """
-    BaseModel class for common attributes/methods.
+    class BaseModel
     """
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes a new instance of the BaseModel class.
+        Base class for all model classes.
 
         Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
+            *args: Non-keyword arguments (not used in this implementation).
+            **kwargs: Keyword arguments containing attribute key-value pairs.
+
+        Public instance attributes:
+            id (str): Unique identifier assigned when an instance is created.
+            created_at (datetime): Date and time when the instance is created.
+            updated_at (datetime): Date and time when the instance is updated.
         """
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    setattr(
-                            self,
-                            key,
-                            datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                            )
-                elif key != '__class__':
-                    setattr(self, key, value)
-            # If it's a new instance, add it to storage and call new method
-            if 'id' not in kwargs:
-                storage.new(self)
-        else:
+        from models import storage
+        for key, item in kwargs.items():
+            if key != "__class__":
+                if key == "created_at" or key == "updated_at":
+                    d_format = "%Y-%m-%dT%H:%M:%S.%f"
+                    setattr(self, key, datetime.strptime(item, d_format))
+                elif key == "id":
+                    setattr(self, key, str(item))
+                else:
+                    setattr(self, key, item)
+        if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
-            # Add the new instance to storage and call new method
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             storage.new(self)
 
     def __str__(self):
         """
-        Returns a string representation of the BaseModel instance.
+        Return a string representation of the instance.
+
+        Returns:
+            str: A formatted string containing the cls name,
+            instance ID, and attributes.
         """
-        return "[{}] ({}) {}".format(
-                self.__class__.__name__,
-                self.id, self.__dict__)
+        s = "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return s
 
     def save(self):
         """
-        Updates the public instance attribute 'updated_at' with the
-        current datetime. Calls the save method of storage.
+        Update the 'updated_at' attribute and save the instance.
         """
+        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
-    def to_dict(self, **kwargs):
+    def to_dict(self):
         """
-        Returns a dictionary representation of the BaseModel instance.
-
-        Args:
-            **kwargs: Additional keyword arguments.
+        Convert the instance attributes to a dictionary.
 
         Returns:
-            dict: Dictionary representation of the instance.
+            dict: A dictionary containing instance attributes.
         """
-        obj_dict = self.__dict__.copy()
-        obj_dict['created_at'] = self.created_at.isoformat()
-        obj_dict['updated_at'] = self.updated_at.isoformat()
-        obj_dict['__class__'] = self.__class__.__name__
-
-        # Include additional arguments in the dictionary
-        for key, value in kwargs.items():
-            obj_dict[key] = value
-
-        return obj_dict
+        dict_cpy = self.__dict__.copy()
+        dict_cpy["__class__"] = type(self).__name__
+        dict_cpy["created_at"] = dict_cpy["created_at"].isoformat()
+        dict_cpy["updated_at"] = dict_cpy["updated_at"].isoformat()
+        return dict_cpy
