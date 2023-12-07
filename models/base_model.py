@@ -6,7 +6,6 @@ Module containing the BaseModel class.
 
 import uuid
 from datetime import datetime
-from models import storage  # Correct import statement
 
 
 class BaseModel:
