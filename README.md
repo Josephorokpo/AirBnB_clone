@@ -37,21 +37,63 @@ Command Interpreter allows us to manage the objects in our AirBnB project. The c
 The command interpreter provides a set of commands to interact with the AirBnB objects. Here are some examples:
 
 > Create a new User:
-	- create User
+	create User
 
 > Retrieve an object:
-	- show User 1234-5678
+	show User 1234-5678
 
 > Perform operations:
-	- all Place
+	all Place
 
 > Update attributes:
-	- update User 1234-5678 email "new.email@example.com"
+	update User 1234-5678 email "new.email@example.com"
 
 > Destroy an object:
-	- destroy Place 8765-4321
+	destroy Place 8765-4321
+
+#Examples
+
+> Creating a User:	
+	(hbnb) create User
+
+> Retrieving an object:	
+	(hbnb) show Place 9876-5432
+
+> Listing all objects of a specific type:	
+	(hbnb) all State
+
+> Updating an attribute:	
+	(hbnb) update User 1234-5678 first_name "John"
+
+> eleting an object:
+	(hbnb) destroy Place 8765-4321
+
+#For a complete list of commands, type help within the command interpreter.
+
+#File Structure
+
+Repo: AirBnB_clone
+	- README.md
+	- AUTHORS
+	- tests/test_models
+		- test_...
+		- test_console.py
+	- models/
+		- base_model.py
+		- __init__.py
+		- user.py
+		- state.py
+		- city.py
+		- amenity.py
+		- place.py
+		- review.py
+		- engine/
+			- __init__.py
+			- file_storage.py
+	- console.py
 
 #Contributors:
 
->Joseph Orokpo
->Salah Eddine Ait Si Ahmad
+- Joseph Orokpo
+
+- Salah Eddine Ait Si Ahmad
