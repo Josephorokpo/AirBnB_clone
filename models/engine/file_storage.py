@@ -4,6 +4,7 @@ Storage file.
 """
 
 
+from models.base_model import BaseModel
 import json
 from os.path import isfile
 
