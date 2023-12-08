@@ -3,16 +3,19 @@
 Storage file.
 """
 
-
-from models.base_model import BaseModel
 import json
 from os.path import isfile
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
     """
-    Serializes instances to a JSON file
-    and deserializes JSON file to instances.
+    Serializes instances to a JSON file and deserializes
+    JSON file to instances.
     """
 
     __file_path = "file.json"
@@ -44,5 +47,16 @@ class FileStorage:
                 data = json.load(file)
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
-                    obj = eval(class_name)(**value)
+                    if class_name == 'Place':
+                        obj = Place(**value)
+                    elif class_name == 'State':
+                        obj = State(**value)
+                    elif class_name == 'City':
+                        obj = City(**value)
+                    elif class_name == 'Amenity':
+                        obj = Amenity(**value)
+                    elif class_name == 'Review':
+                        obj = Review(**value)
+                    else:
+                        continue
                     self.__objects[key] = obj
