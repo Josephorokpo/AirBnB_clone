@@ -3,9 +3,13 @@
 Module for the command interpreter.
 """
 
-
 import cmd
-from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 
 
@@ -98,13 +102,10 @@ class HBNBCommand(cmd.Cmd):
         Print all string representations of instances.
         """
         args = arg.split()
-        instances = storage.all()
-        if not args:
-            print([str(val) for val in instances.values()])
-        elif args[0] not in storage.classes():
+        if not args or args[0] not in storage.classes():
             print("** class doesn't exist **")
         else:
-            print([str(val) for key, val in instances.items() if args[0] in key])
+            print([str(val) for val in storage.classes()[args[0]].all()])
 
     def do_update(self, arg):
         """
