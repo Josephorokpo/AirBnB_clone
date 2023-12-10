@@ -11,7 +11,7 @@ class TestAmenity(unittest.TestCase):
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
         self.assertEqual(amenity.name, "")
-        self.assertTrue(type(amenity.name) == str)
+        self.assertTrue(isinstance(amenity.name, str))
 
     def test_class_doc(self):
         self.assertIsNotNone(Amenity.__doc__)

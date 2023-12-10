@@ -1,27 +1,18 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-Module containing the City class.
+Module for the class City
 """
-
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
     """
-    City class with state_id and name attributes.
+    class City
 
-    Public class attributes:
-    - state_id: string - empty string: it will be the State.id
-    - name: string - empty string
+    Attributes:
+        state_id (str): The ID of the state to which the city belongs.
+        name (str): The name of the city.
     """
-    def __init__(self, *args, **kwargs):
-        """
-        Initializes a new instance of the City class.
 
-        Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
-        super().__init__(*args, **kwargs)
-        self.state_id = kwargs.get('state_id', '')
-        self.name = kwargs.get('name', '')
+    state_id = ""
+    name = ""

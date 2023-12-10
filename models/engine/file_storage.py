@@ -1,10 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-Storage file.
+Module for the class FileStorage
 """
-
 import json
-from os.path import isfile
+from models.base_model import BaseModel
+from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
@@ -14,49 +14,55 @@ from models.review import Review
 
 class FileStorage:
     """
-    Serializes instances to a JSON file and deserializes
-    JSON file to instances.
+    Class to manage serialization and deserialization of objects.
+
+    Attributes:
+        __file_path (str): The path to the JSON file.
+        __objects (dict): A dictionary containing all serialized objects.
     """
 
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Returns the dictionary __objects."""
+        """
+        Retrieve the dictionary of all serialized objects.
+
+        Returns:
+            dict: A dictionary containing all serialized objects.
+
+        """
         return self.__objects
 
     def new(self, obj):
-        """Sets in __objects the obj with key <obj class name>.id."""
+        """
+        Add a new serialized object to the dictionary.
+
+        Args:
+            obj: An instance of a class to be added.
+        """
         key = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file."""
-        serialized_objects = {key: obj.to_dict() for key, obj in self.__objects.items()}
-        with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(serialized_objects, file)
+        """
+        Save the serialized objects to the JSON file.
+        """
+        save_obj = {}
+        for key, value in self.__objects.items():
+            save_obj[key] = value.to_dict()
+        with open(self.__file_path, "w", encoding="utf-8") as fd:
+            json.dump(save_obj, fd)
 
     def reload(self):
         """
-        Deserializes the JSON file to __objects.
-        Only if the JSON file (__file_path) exists; otherwise, do nothing.
-        If the file doesn’t exist, no exception should be raised.
+        Load serialized data from the JSON file and create instances.
         """
-        if isfile(self.__file_path):
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    if class_name == 'Place':
-                        obj = Place(**value)
-                    elif class_name == 'State':
-                        obj = State(**value)
-                    elif class_name == 'City':
-                        obj = City(**value)
-                    elif class_name == 'Amenity':
-                        obj = Amenity(**value)
-                    elif class_name == 'Review':
-                        obj = Review(**value)
-                    else:
-                        continue
-                    self.__objects[key] = obj
+        try:
+            with open(self.__file_path, encoding="utf-8") as fd:
+                json_fvar = json.load(fd)
+
+            for key, value in json_fvar.items():
+                self.new(eval(key.split(".")[0])(**value))
+        except FileNotFoundError:
+            pass

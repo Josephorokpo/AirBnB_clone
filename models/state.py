@@ -1,25 +1,16 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-Module containing the State class.
+Module of the class State
 """
-
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
     """
-    State class with a name attribute.
+    class State
 
-    Public class attributes:
-    - name: string - empty string
+    Attributes:
+        name (str): name of the state
     """
-    def __init__(self, *args, **kwargs):
-        """
-        Initializes a new instance of the State class.
 
-        Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
-        super().__init__(*args, **kwargs)
-        self.name = kwargs.get('name', '')
+    name = ""

@@ -1,25 +1,16 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-Module containing the Amenity class.
+Module for the class Amenity
 """
-
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
     """
-    Amenity class with a name attribute.
+    class Amenity
 
-    Public class attributes:
-    - name: string - empty string
+    Attributes:
+        name (str): The name of the amenity.
     """
-    def __init__(self, *args, **kwargs):
-        """
-        Initializes a new instance of the Amenity class.
 
-        Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
-        super().__init__(*args, **kwargs)
-        self.name = kwargs.get('name', '')
+    name = ""

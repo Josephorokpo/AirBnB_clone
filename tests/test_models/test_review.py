@@ -17,19 +17,19 @@ class TestReview(unittest.TestCase):
         review = Review()
         self.assertTrue(hasattr(review, "place_id"))
         self.assertEqual(review.place_id, "")
-        self.assertTrue(type(review.place_id) == str)
+        self.assertTrue(isinstance(review.place_id, str))
 
     def test_attribute_user_id(self):
         review = Review()
         self.assertTrue(hasattr(review, "user_id"))
         self.assertEqual(review.user_id, "")
-        self.assertTrue(type(review.user_id) == str)
+        self.assertTrue(isinstance(review.user_id, str))
 
     def test_attribute_text(self):
         review = Review()
         self.assertTrue(hasattr(review, "text"))
         self.assertEqual(review.text, "")
-        self.assertTrue(type(review.text) == str)
+        self.assertTrue(isinstance(review.text, str))
 
 
 if __name__ == "__main__":
