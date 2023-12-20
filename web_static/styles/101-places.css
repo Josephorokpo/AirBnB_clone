@@ -110,14 +110,14 @@
 /* amenities & reviews */
 
 .places .amenities,
-.paces .reviews {
+.places .reviews {
     margin-top: 40px;
     width: 100%;
     height: inherit;
 }
 
 .places .amenities ul,
-.paces .reviews ul {
+.places .reviews ul {
     list-style-type: none;
     padding: 0;
 }
